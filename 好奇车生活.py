@@ -1,13 +1,13 @@
-/*
-time£º2023.4.26
+'''
+timeï¼š2023.4.26
 cron: 0 9,18 * * *
-new Env('ºÃÆæ³µÉú»îÇ©µ½');
-Î¢ĞÅĞ¡³ÌĞò-ºÃÆæ³µÉú»î-ºÃÎï¶Ò»»
-×¥°üÓòÃû: https://channel.cheryfs.cn/
-×¥°üÇëÇóÍ·ÀïÃæ: accountId µÄÖµ
-»·¾³±äÁ¿Ãû³Æ£ºhqcshck = accountId µÄÖµ
-¶àÕËºÅĞÂ½¨±äÁ¿»òÕßÓÃ & ·Ö¿ª
-*/
+new Env('å¥½å¥‡è½¦ç”Ÿæ´»ç­¾åˆ°');
+å¾®ä¿¡å°ç¨‹åº-å¥½å¥‡è½¦ç”Ÿæ´»-å¥½ç‰©å…‘æ¢
+æŠ“åŒ…åŸŸå: https://channel.cheryfs.cn/
+æŠ“åŒ…è¯·æ±‚å¤´é‡Œé¢: accountId çš„å€¼
+ç¯å¢ƒå˜é‡åç§°ï¼šhqcshck = accountId çš„å€¼
+å¤šè´¦å·æ–°å»ºå˜é‡æˆ–è€…ç”¨ & åˆ†å¼€
+'''
 
 import time
 import requests
@@ -20,15 +20,15 @@ def load_send():
     if path.exists(cur_path + "/SendNotify.py"):
         try:
             from SendNotify import send
-            print("¼ÓÔØÍ¨Öª·şÎñ³É¹¦£¡")
+            print("åŠ è½½é€šçŸ¥æœåŠ¡æˆåŠŸï¼")
         except:
             send = False
             print(
-                '''¼ÓÔØÍ¨Öª·şÎñÊ§°Ü~\nÇëÊ¹ÓÃÒÔÏÂÀ­¿âµØÖ·\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
+                '''åŠ è½½é€šçŸ¥æœåŠ¡å¤±è´¥~\nè¯·ä½¿ç”¨ä»¥ä¸‹æ‹‰åº“åœ°å€\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
     else:
         send = False
         print(
-            '''¼ÓÔØÍ¨Öª·şÎñÊ§°Ü~\nÇëÊ¹ÓÃÒÔÏÂÀ­¿âµØÖ·\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
+            '''åŠ è½½é€šçŸ¥æœåŠ¡å¤±è´¥~\nè¯·ä½¿ç”¨ä»¥ä¸‹æ‹‰åº“åœ°å€\nql repo https://github.com/Bidepanlong/ql.git "bd_" "README" "SendNotify"''')
 
 
 load_send()
@@ -37,7 +37,7 @@ load_send()
 def get_environ(key, default="", output=True):
     def no_read():
         if output:
-            print(f"Î´ÌîĞ´»·¾³±äÁ¿ {key} ÇëÌí¼Ó")
+            print(f"æœªå¡«å†™ç¯å¢ƒå˜é‡ {key} è¯·æ·»åŠ ")
             exit(0)
         return default
 
@@ -85,7 +85,7 @@ class Hqcsh():
             if sign_rsp.json()['success'] == True:
                 if sign_rsp.json()['result']['success'] == True:
                     if q_rsp.json()['success'] == False:
-                        xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼³É¹¦\n[Ç©µ½]£ºÇ©µ½³É¹¦\n[»ı·Ö]£º{jf_rsp.json()['result']}\n[ÇÀ°ü]£ºµ±Ç°²»ÔÚÇÀ°üÊ±¼ä¶Î£¬ÇëÔÚ18-22µãÔËĞĞ\n\n"
+                        xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•æˆåŠŸ\n[ç­¾åˆ°]ï¼šç­¾åˆ°æˆåŠŸ\n[ç§¯åˆ†]ï¼š{jf_rsp.json()['result']}\n[æŠ¢åŒ…]ï¼šå½“å‰ä¸åœ¨æŠ¢åŒ…æ—¶é—´æ®µï¼Œè¯·åœ¨18-22ç‚¹è¿è¡Œ\n\n"
                         print(xx)
                         self.msg += xx
                     elif q_rsp.json()['result']['success'] == True:
@@ -93,21 +93,21 @@ class Hqcsh():
                         qr_url = 'https://channel.cheryfs.cn/archer/activity-api/pointsmall/exchangeCardResult?resultKey=' + \
                                  q_rsp.json()['result']['id']
                         qr_rsp = requests.get(qr_url, headers=q_headers)
-                        if qr_rsp.json()['result']['errMsg'] == '³É¹¦':
-                            xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼³É¹¦\n[Ç©µ½]£ºÇ©µ½³É¹¦\n[»ı·Ö]£º{jf_rsp.json()['result']}\n[ÇÀ°ü]£º{qr_rsp.json()['result']['errMsg']}£¬Ç°Íù¸öÈËÖĞĞÄ-ÎÒµÄÀñ°ü²é¿´£¡\n\n"
+                        if qr_rsp.json()['result']['errMsg'] == 'æˆåŠŸ':
+                            xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•æˆåŠŸ\n[ç­¾åˆ°]ï¼šç­¾åˆ°æˆåŠŸ\n[ç§¯åˆ†]ï¼š{jf_rsp.json()['result']}\n[æŠ¢åŒ…]ï¼š{qr_rsp.json()['result']['errMsg']}ï¼Œå‰å¾€ä¸ªäººä¸­å¿ƒ-æˆ‘çš„ç¤¼åŒ…æŸ¥çœ‹ï¼\n\n"
                             print(xx)
                             self.msg += xx
                         else:
-                            xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼³É¹¦\n[Ç©µ½]£ºÇ©µ½³É¹¦\n[»ı·Ö]£º{jf_rsp.json()['result']}\n[ÇÀ°ü]£º{qr_rsp.json()['result']['errMsg']}\n\n"
+                            xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•æˆåŠŸ\n[ç­¾åˆ°]ï¼šç­¾åˆ°æˆåŠŸ\n[ç§¯åˆ†]ï¼š{jf_rsp.json()['result']}\n[æŠ¢åŒ…]ï¼š{qr_rsp.json()['result']['errMsg']}\n\n"
                             print(xx)
                             self.msg += xx
                     elif q_rsp.json()['result']['success'] == False:
-                        xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼³É¹¦\n[Ç©µ½]£ºÇ©µ½³É¹¦\n[»ı·Ö]£º{jf_rsp.json()['result']}\n[ÇÀ°ü]£º{q_rsp.json()['result']['errMsg']}\n\n"
+                        xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•æˆåŠŸ\n[ç­¾åˆ°]ï¼šç­¾åˆ°æˆåŠŸ\n[ç§¯åˆ†]ï¼š{jf_rsp.json()['result']}\n[æŠ¢åŒ…]ï¼š{q_rsp.json()['result']['errMsg']}\n\n"
                         print(xx)
                         self.msg += xx
                 elif sign_rsp.json()['result']['success'] == False:
                     if q_rsp.json()['success'] == False:
-                        xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼³É¹¦\n[Ç©µ½]£º{sign_rsp.json()['result']['message']}\n[»ı·Ö]£º{jf_rsp.json()['result']}\n[ÇÀ°ü]£ºµ±Ç°²»ÔÚÇÀ°üÊ±¼ä¶Î£¬ÇëÔÚ18-22µãÔËĞĞ\n\n"
+                        xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•æˆåŠŸ\n[ç­¾åˆ°]ï¼š{sign_rsp.json()['result']['message']}\n[ç§¯åˆ†]ï¼š{jf_rsp.json()['result']}\n[æŠ¢åŒ…]ï¼šå½“å‰ä¸åœ¨æŠ¢åŒ…æ—¶é—´æ®µï¼Œè¯·åœ¨18-22ç‚¹è¿è¡Œ\n\n"
                         print(xx)
                         self.msg += xx
                     elif q_rsp.json()['result']['success'] == True:
@@ -115,30 +115,30 @@ class Hqcsh():
                         qr_url = 'https://channel.cheryfs.cn/archer/activity-api/pointsmall/exchangeCardResult?resultKey=' + \
                                  q_rsp.json()['result']['id']
                         qr_rsp = requests.get(qr_url, headers=q_headers)
-                        if qr_rsp.json()['result']['errMsg'] == '³É¹¦':
-                            xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼³É¹¦\n[Ç©µ½]£º{sign_rsp.json()['result']['message']}\n[»ı·Ö]£º{jf_rsp.json()['result']}\n[ÇÀ°ü]£º{qr_rsp.json()['result']['errMsg']}£¬Ç°Íù¸öÈËÖĞĞÄ-ÎÒµÄÀñ°ü²é¿´£¡\n\n"
+                        if qr_rsp.json()['result']['errMsg'] == 'æˆåŠŸ':
+                            xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•æˆåŠŸ\n[ç­¾åˆ°]ï¼š{sign_rsp.json()['result']['message']}\n[ç§¯åˆ†]ï¼š{jf_rsp.json()['result']}\n[æŠ¢åŒ…]ï¼š{qr_rsp.json()['result']['errMsg']}ï¼Œå‰å¾€ä¸ªäººä¸­å¿ƒ-æˆ‘çš„ç¤¼åŒ…æŸ¥çœ‹ï¼\n\n"
                             print(xx)
                             self.msg += xx
                         else:
-                            xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼³É¹¦\n[Ç©µ½]£º{sign_rsp.json()['result']['message']}\n[»ı·Ö]£º{jf_rsp.json()['result']}\n[ÇÀ°ü]£º{qr_rsp.json()['result']['errMsg']}\n\n"
+                            xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•æˆåŠŸ\n[ç­¾åˆ°]ï¼š{sign_rsp.json()['result']['message']}\n[ç§¯åˆ†]ï¼š{jf_rsp.json()['result']}\n[æŠ¢åŒ…]ï¼š{qr_rsp.json()['result']['errMsg']}\n\n"
                             print(xx)
                             self.msg += xx
                     elif q_rsp.json()['result']['success'] == False:
-                        xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼³É¹¦\n[Ç©µ½]£º{sign_rsp.json()['result']['message']}\n[»ı·Ö]£º{jf_rsp.json()['result']}\n[ÇÀ°ü]£º{q_rsp.json()['result']['errMsg']}\n\n"
+                        xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•æˆåŠŸ\n[ç­¾åˆ°]ï¼š{sign_rsp.json()['result']['message']}\n[ç§¯åˆ†]ï¼š{jf_rsp.json()['result']}\n[æŠ¢åŒ…]ï¼š{q_rsp.json()['result']['errMsg']}\n\n"
                         print(xx)
                         self.msg += xx
             elif sign_rsp.json()['success'] == False:
-                xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼Ê§°Ü£¬ÇëÉÔºóÖØÊÔ»òÕßck¿ÉÄÜÊ§Ğ§,µ±Ç°ck£º{self.ck}\n\n"
+                xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•å¤±è´¥ï¼Œè¯·ç¨åé‡è¯•æˆ–è€…ckå¯èƒ½å¤±æ•ˆ,å½“å‰ckï¼š{self.ck}\n\n"
                 print(xx)
                 self.msg += xx
             else:
-                xx = f"[µÇÂ¼]£ºÕËºÅ{a}µÇÂ¼Ê§°Ü£¬ÇëÉÔºóÖØÊÔ»òÕßck¿ÉÄÜÊ§Ğ§,µ±Ç°ck£º{self.ck}\n\n"
+                xx = f"[ç™»å½•]ï¼šè´¦å·{a}ç™»å½•å¤±è´¥ï¼Œè¯·ç¨åé‡è¯•æˆ–è€…ckå¯èƒ½å¤±æ•ˆ,å½“å‰ckï¼š{self.ck}\n\n"
                 print(xx)
                 self.msg += xx
                 return self.msg
             return self.msg
         except Exception as e:
-            xx = f"[ÇëÇóÒì³£]£ºÉÔºóÔÙÊÔ\n{e}\n\n"
+            xx = f"[è¯·æ±‚å¼‚å¸¸]ï¼šç¨åå†è¯•\n{e}\n\n"
             print(xx)
             self.msg += xx
             return self.msg
@@ -148,20 +148,20 @@ class Hqcsh():
 
 
 if __name__ == '__main__':
-    q1 = '647894196522340352'  # 188»ı·Ö 1.08Ôª
-    q2 = '622187839353806848'  # 288»ı·Ö 1.88Ôª
-    q3 = '622187928306601984'  # 588»ı·Ö 3.88Ôª
-    q4 = '622188100122075136'  # 888»ı·Ö 5.88Ôª
+    q1 = '647894196522340352'  # 188ç§¯åˆ† 1.08å…ƒ
+    q2 = '622187839353806848'  # 288ç§¯åˆ† 1.88å…ƒ
+    q3 = '622187928306601984'  # 588ç§¯åˆ† 3.88å…ƒ
+    q4 = '622188100122075136'  # 888ç§¯åˆ† 5.88å…ƒ
     qiang = q1
-    print('\nÄ¬ÈÏÉèÖÃ×Ô¶¯ÇÀ188»ı·Ö1.08ÔªµÄ°ü\nĞèÒªÉèÖÃµ½½Å±¾µ×²¿ĞŞ¸Ä qiang = xxx\nxxxÎªq1-q4¶ÔÓ¦µÄ°ü\n×¢£ºÇÀ°üÃ»ÓĞ×öÑ­»·£¬Ö»Ìá½»Ò»´Î¿ÉÄÜ»áÊ§°Ü£¬¿ÉÒÔÔÚ18µãÖ®ºó¶¨Ê±ÖØ¸´ÔËĞĞ¼¸´Î\n')
+    print('\né»˜è®¤è®¾ç½®è‡ªåŠ¨æŠ¢188ç§¯åˆ†1.08å…ƒçš„åŒ…\néœ€è¦è®¾ç½®åˆ°è„šæœ¬åº•éƒ¨ä¿®æ”¹ qiang = xxx\nxxxä¸ºq1-q4å¯¹åº”çš„åŒ…\næ³¨ï¼šæŠ¢åŒ…æ²¡æœ‰åšå¾ªç¯ï¼Œåªæäº¤ä¸€æ¬¡å¯èƒ½ä¼šå¤±è´¥ï¼Œå¯ä»¥åœ¨18ç‚¹ä¹‹åå®šæ—¶é‡å¤è¿è¡Œå‡ æ¬¡\n')
     token = get_environ("hqcshck")
     msg = ''
     cks = token.split("&")
-    print("¼ì²âµ½{}¸öck¼ÇÂ¼\n¿ªÊ¼HqcshÇ©µ½\n".format(len(cks)))
+    print("æ£€æµ‹åˆ°{}ä¸ªckè®°å½•\nå¼€å§‹Hqcshç­¾åˆ°\n".format(len(cks)))
     a = 0
     for ck in cks:
         a += 1
         run = Hqcsh(ck)
         msg += run.get_sign_msg()
     if send:
-        send("ºÃÆæ³µÉú»îÇ©µ½Í¨Öª", msg)
+        send("å¥½å¥‡è½¦ç”Ÿæ´»ç­¾åˆ°é€šçŸ¥", msg)
