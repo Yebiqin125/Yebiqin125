@@ -1,21 +1,21 @@
 /*
-Î¢ĞÅĞ¡³ÌĞò zippo»áÔ±ÖĞĞÄ
+å¾®ä¿¡å°ç¨‹åº zippoä¼šå‘˜ä¸­å¿ƒ
 
-Ê¹ÓÃÀàÀ´ÊµÏÖµÄ°æ±¾, °üº¬ÁË¼òµ¥µÄÀà¼Ì³Ğ
+ä½¿ç”¨ç±»æ¥å®ç°çš„ç‰ˆæœ¬, åŒ…å«äº†ç®€å•çš„ç±»ç»§æ‰¿
 
 cron: 24 7,19 * * *
 */
-const $ = new Env('zippo»áÔ±ÖĞĞÄ');
+const $ = new Env('zippoä¼šå‘˜ä¸­å¿ƒ');
 const got = require('got');
 
 const envPrefix = 'zippo'
-const envSplitor = ['\n','&','@'] //Ö§³Ö¶àÖÖ·Ö¸î£¬µ«Òª±£Ö¤±äÁ¿Àï²»´æÔÚÕâ¸ö×Ö·û
-const ckNames = [envPrefix+'Cookie'] //¿ÉÒÔÖ§³Ö¶à±äÁ¿
+const envSplitor = ['\n','&','@'] //æ”¯æŒå¤šç§åˆ†å‰²ï¼Œä½†è¦ä¿è¯å˜é‡é‡Œä¸å­˜åœ¨è¿™ä¸ªå­—ç¬¦
+const ckNames = [envPrefix+'Cookie'] //å¯ä»¥æ”¯æŒå¤šå˜é‡
 
-const MAX_THREAD = parseInt(process.env[envPrefix+'Thread']) || 50; //Ä¬ÈÏ×î´ó²¢·¢Êı
+const MAX_THREAD = parseInt(process.env[envPrefix+'Thread']) || 50; //é»˜è®¤æœ€å¤§å¹¶å‘æ•°
 const DEFAULT_TIMEOUT=8000, DEFAULT_RETRY=3;
 
-//ÕâÀïÅäÖÃÁËÒ»Ğ©³£Á¿, ²»ĞèÒªºóÃæÃ¿´ÎÖØĞÂĞ´ÁË
+//è¿™é‡Œé…ç½®äº†ä¸€äº›å¸¸é‡, ä¸éœ€è¦åé¢æ¯æ¬¡é‡æ–°å†™äº†
 const default_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_1_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.32(0x1800202f) NetType/WIFI Language/zh_CN';
 const Referer = 'https://servicewechat.com/wxaa75ffd8c2d75da7/56/page-frame.html';
 const appid = 'wxaa75ffd8c2d75da7';
@@ -26,21 +26,21 @@ class BasicClass {
         this.name = '';
         this.valid = true;
         
-        //ÉèÖÃgotµÄÄ¬ÈÏ³¬Ê±µÈ²ÎÊı
+        //è®¾ç½®gotçš„é»˜è®¤è¶…æ—¶ç­‰å‚æ•°
         this.got = got.extend({
             retry: {limit:0},
             timeout: DEFAULT_TIMEOUT,
             followRedirect: false,
         })
     }
-    //¸øÃ¿¸öÕË»§´òÓ¡Ç°Ãæ¼ÓÉÏ×Ô¼ºµÄÃû×Ö
+    //ç»™æ¯ä¸ªè´¦æˆ·æ‰“å°å‰é¢åŠ ä¸Šè‡ªå·±çš„åå­—
     log(msg, opt = {}) {
         var m = '', n = $.userCount.toString().length;;
-        if (this.index) m += `ÕËºÅ[${$.padStr(this.index,n)}]`;
+        if (this.index) m += `è´¦å·[${$.padStr(this.index,n)}]`;
         if (this.name) m += `[${this.name}]`;
         $.log(m + msg, opt);
     }
-    //Ê¹ÓÃ×Ô¼ºµÄgotÊµÀı·¢°ü,¿ÉÒÔÊµÏÖÉèÖÃÃ¿¸öÕËºÅ×Ô¼ºµÄÄ¬ÈÏUAµÈ
+    //ä½¿ç”¨è‡ªå·±çš„gotå®ä¾‹å‘åŒ…,å¯ä»¥å®ç°è®¾ç½®æ¯ä¸ªè´¦å·è‡ªå·±çš„é»˜è®¤UAç­‰
     async request(opt) {
         var resp = null, count = 0;
         var fn = opt.fn || opt.url;
@@ -57,19 +57,19 @@ class BasicClass {
                 });
                 if(err) {
                     if(err.name == 'TimeoutError') {
-                        this.log(`[${fn}]ÇëÇó³¬Ê±(${err.code})£¬ÖØÊÔµÚ${count}´Î`);
+                        this.log(`[${fn}]è¯·æ±‚è¶…æ—¶(${err.code})ï¼Œé‡è¯•ç¬¬${count}æ¬¡`);
                     } else if(errcodes.includes(err.code)) {
-                        this.log(`[${fn}]ÇëÇó´íÎó(${err.code})£¬ÖØÊÔµÚ${count}´Î`);
+                        this.log(`[${fn}]è¯·æ±‚é”™è¯¯(${err.code})ï¼Œé‡è¯•ç¬¬${count}æ¬¡`);
                     } else {
                         let statusCode = resp?.statusCode || -1;
-                        this.log(`[${fn}]ÇëÇó´íÎó(${err.message}), ·µ»Ø[${statusCode}]`);
+                        this.log(`[${fn}]è¯·æ±‚é”™è¯¯(${err.message}), è¿”å›[${statusCode}]`);
                         break;
                     }
                 } else {
                     break;
                 }
             } catch (e) {
-                this.log(`[${fn}]ÇëÇó´íÎó(${e.message})£¬ÖØÊÔµÚ${count}´Î`);
+                this.log(`[${fn}]è¯·æ±‚é”™è¯¯(${e.message})ï¼Œé‡è¯•ç¬¬${count}æ¬¡`);
             };
         }
         let {statusCode=-1,headers=null,body=null} = resp;
@@ -118,19 +118,19 @@ class UserClass extends BasicClass {
                 this.valid = true;
                 for(let task of (result?.data?.task || [])) {
                     switch(task.title) {
-                        case 'Ç©µ½':
-                            this.log(`½ñÌì${task.task_status==0?'Î´':'ÒÑ'}Ç©µ½`);
+                        case 'ç­¾åˆ°':
+                            this.log(`ä»Šå¤©${task.task_status==0?'æœª':'å·²'}ç­¾åˆ°`);
                             if(task.task_status==0) {
                                 await this.signin();
                             }
                             break;
                         default:
-                            let str = task.task_status==0 ? 'Î´Íê³É' : (task.task_status==1 ? 'ÒÑÍê³ÉÎ´ÁìÈ¡½±Àø' : 'ÒÑÁìÈ¡½±Àø');
-                            this.log(`ÈÎÎñ[${task.title}] -- ${str}`);
+                            let str = task.task_status==0 ? 'æœªå®Œæˆ' : (task.task_status==1 ? 'å·²å®Œæˆæœªé¢†å–å¥–åŠ±' : 'å·²é¢†å–å¥–åŠ±');
+                            this.log(`ä»»åŠ¡[${task.title}] -- ${str}`);
                             switch(Number(task.task_status)) {
                                 case 0:
                                     await this.dotask(task,1);
-                                    //×¢ÒâÕâÀïÃ»ÓĞÁËbreak, ÄÇÃ´½Å±¾»á¼ÌĞøÍùÏÂ×ßÖ±ÖÁÓöµ½break, Ò²¾ÍÊÇ»á×Ô¶¯Ö´ĞĞ await this.dotask(task,2)
+                                    //æ³¨æ„è¿™é‡Œæ²¡æœ‰äº†break, é‚£ä¹ˆè„šæœ¬ä¼šç»§ç»­å¾€ä¸‹èµ°ç›´è‡³é‡åˆ°break, ä¹Ÿå°±æ˜¯ä¼šè‡ªåŠ¨æ‰§è¡Œ await this.dotask(task,2)
                                 case 1:
                                     await this.dotask(task,2);
                                     break;
@@ -141,7 +141,7 @@ class UserClass extends BasicClass {
                     }
                 }
             } else {
-                this.log(`²éÑ¯ÕËºÅÈÎÎñÊ§°Ü`);
+                this.log(`æŸ¥è¯¢è´¦å·ä»»åŠ¡å¤±è´¥`);
             }
         } catch (e) {
             console.log(e)
@@ -167,9 +167,9 @@ class UserClass extends BasicClass {
             }
             let {result} = await this.request(options)
             if(result?.errcode == 0) {
-                this.log(`Ç©µ½³É¹¦`);
+                this.log(`ç­¾åˆ°æˆåŠŸ`);
             } else {
-                this.log(`Ç©µ½Ê§°Ü[${result?.errcode}]: ${result?.errmsg}`);
+                this.log(`ç­¾åˆ°å¤±è´¥[${result?.errcode}]: ${result?.errmsg}`);
             }
         } catch (e) {
             console.log(e)
@@ -178,7 +178,7 @@ class UserClass extends BasicClass {
     
     async dotask(task,acttype) {
         try {
-            let str = acttype==1 ? 'Íê³É' : 'ÁìÈ¡½±Àø';
+            let str = acttype==1 ? 'å®Œæˆ' : 'é¢†å–å¥–åŠ±';
             let options = {
                 fn: 'dotask',
                 method: 'post',
@@ -197,9 +197,9 @@ class UserClass extends BasicClass {
             }
             let {result} = await this.request(options)
             if(result?.errcode == 0) {
-                this.log(`ÈÎÎñ[${task.title}]${str}³É¹¦`);
+                this.log(`ä»»åŠ¡[${task.title}]${str}æˆåŠŸ`);
             } else {
-                this.log(`ÈÎÎñ[${task.title}]${str}Ê§°Ü[${result?.errcode}]: ${result?.errmsg}`);
+                this.log(`ä»»åŠ¡[${task.title}]${str}å¤±è´¥[${result?.errcode}]: ${result?.errmsg}`);
             }
         } catch (e) {
             console.log(e)
@@ -232,37 +232,37 @@ class UserClass extends BasicClass {
                     this.point = info.AvailablePoints__c || 0;
                 }
             } else {
-                this.log(`²éÑ¯ÕËºÅÊ§°Ü[${result?.errcode}]: ${result?.errmsg}`);
+                this.log(`æŸ¥è¯¢è´¦å·å¤±è´¥[${result?.errcode}]: ${result?.errmsg}`);
             }
         } catch (e) {
             console.log(e)
         }
     }
     
-    //×öÈÎÎñÂß¼­
+    //åšä»»åŠ¡é€»è¾‘
     async userTask() {
-        $.log(`\n============= ÕËºÅ[${this.index}] =============`);
+        $.log(`\n============= è´¦å·[${this.index}] =============`);
         await this.inintmembers();
         if(!this.valid) return;
         await this.ininttask();
         await this.inintmembers();
-        this.log(`»ı·Ö: ${this.point}`);
+        this.log(`ç§¯åˆ†: ${this.point}`);
     }
 }
 
 !(async () => {
-    $.log(`×î´ó²¢·¢Êı: ${MAX_THREAD}`);
+    $.log(`æœ€å¤§å¹¶å‘æ•°: ${MAX_THREAD}`);
     $.log('');
     
-    //·â×°µÄ¶ÁÈ¡±äÁ¿·½·¨, ¿ÉÒÔ×Ô¼ºÁíÍâĞ´Ò²¿ÉÒÔÖ±½ÓÓÃ, ¶ÁÈ¡µ½µÄÕËºÅ»á´æÈë $.userList ÖĞ
+    //å°è£…çš„è¯»å–å˜é‡æ–¹æ³•, å¯ä»¥è‡ªå·±å¦å¤–å†™ä¹Ÿå¯ä»¥ç›´æ¥ç”¨, è¯»å–åˆ°çš„è´¦å·ä¼šå­˜å…¥ $.userList ä¸­
     $.read_env(UserClass);
     
-    //Õı³£µÄ×öÈÎÎñÁ÷³Ì
+    //æ­£å¸¸çš„åšä»»åŠ¡æµç¨‹
     for(let user of $.userList) {
         await user.userTask();
     }
     
-    //·â×°µÄ²¢·¢·½·¨, ÏëÊÔµÄ°ÑÏÂÃæµÄ//É¾µô
+    //å°è£…çš„å¹¶å‘æ–¹æ³•, æƒ³è¯•çš„æŠŠä¸‹é¢çš„//åˆ æ‰
     //await $.threadTask('userTask',MAX_THREAD);
     
 })()
@@ -274,7 +274,7 @@ function Env(name) {
         constructor(name) {
             this.name = name;
             this.startTime = Date.now();
-            this.log(`[${this.name}]¿ªÊ¼ÔËĞĞ\n`, {time: true});
+            this.log(`[${this.name}]å¼€å§‹è¿è¡Œ\n`, {time: true});
             this.notifyStr = [];
             this.notifyFlag = true;
             this.userIdx = 0;
@@ -302,10 +302,10 @@ function Env(name) {
             }
             this.userCount = this.userList.length;
             if (!this.userCount) {
-                this.log(`Î´ÕÒµ½±äÁ¿£¬Çë¼ì²é±äÁ¿${ckNames.map(x => '['+x+']').join('»ò')}`, {notify: true});
+                this.log(`æœªæ‰¾åˆ°å˜é‡ï¼Œè¯·æ£€æŸ¥å˜é‡${ckNames.map(x => '['+x+']').join('æˆ–')}`, {notify: true});
                 return false;
             }
-            this.log(`¹²ÕÒµ½${this.userCount}¸öÕËºÅ`);
+            this.log(`å…±æ‰¾åˆ°${this.userCount}ä¸ªè´¦å·`);
             return true;
         }
         async threads(taskName, conf, opt = {}) {
@@ -340,7 +340,7 @@ function Env(name) {
             if(!this.notifyFlag) return;
             if(!this.notifyStr.length) return;
             var notify = require('./sendNotify');
-            this.log('\n============== ÍÆËÍ ==============');
+            this.log('\n============== æ¨é€ ==============');
             await notify.sendNotify(this.name, this.notifyStr.join('\n'));
         }
         padStr(num, length, opt = {}) {
@@ -413,7 +413,7 @@ function Env(name) {
             let e = Date.now();
             let s = (e - this.startTime) / 1000;
             this.log('');
-            this.log(`[${this.name}]ÔËĞĞ½áÊø£¬¹²ÔËĞĞÁË${s}Ãë`, {time: true});
+            this.log(`[${this.name}]è¿è¡Œç»“æŸï¼Œå…±è¿è¡Œäº†${s}ç§’`, {time: true});
             process.exit(0);
         }
     }
