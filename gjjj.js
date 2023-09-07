@@ -1,5 +1,5 @@
 /**
- * 
+顾家家居会员俱乐部
  * 项目类型：微信小程序
  * 项目名称：顾家家居会员俱乐部
  * 项目抓包：抓mc.kukahome.com下的X-Customer & authorization填入变量
