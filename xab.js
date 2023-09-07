@@ -1,10 +1,11 @@
 /*
+喜爱帮
 游戏下载  http://mtw.so/6pakwS
 
 签到越久收益越高，每月最少3元质保。
 别觉得3少，你随便看里面一些任务，手动一下注册都几十都有，去玩玩。
 
-定时:0 7,8 * * *
+cron: 0 7,8 * * *
 不会的复制我这个定时
 啦库，方便你
 ql raw https://zzt666.coding.net/p/ql/d/ql/git/raw/master/xiai.js
